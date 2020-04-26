@@ -1,5 +1,5 @@
 const { Client, MessageAttachment } = require('discord.js');
-const { prefix, token } = require('./config.json');
+const { prefix } = require('./config.json');
 const client = new Client();
 
 client.on('ready', () => {
