@@ -1,10 +1,10 @@
 const { Client, MessageAttachment } = require('discord.js');
-const { prefix, token, giphyToken } = require('./config.json');
+const { prefix } = require('./config.json');
 const client = new Client();
 
 //  initialize giphy
 const GphApiClient = require('giphy-js-sdk-core');
-giphy = GphApiClient(giphyToken);
+giphy = GphApiClient(process.env.GIPHY_TOKEN);
 
 client.on('ready', () => {
   console.log('Connected as ' + client.user.tag);
@@ -66,4 +66,4 @@ client.on('message', (message) => {
   }
 });
 
-client.login(token);
+client.login(process.env.BOT_TOKEN);
