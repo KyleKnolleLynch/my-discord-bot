@@ -1,6 +1,10 @@
 const { Client, MessageAttachment } = require('discord.js');
-const { prefix } = require('./config.json');
+const { prefix, token, giphyToken } = require('./config.json');
 const client = new Client();
+
+//  initialize giphy
+const GphApiClient = require('giphy-js-sdk-core');
+giphy = GphApiClient(giphyToken);
 
 client.on('ready', () => {
   console.log('Connected as ' + client.user.tag);
@@ -24,10 +28,42 @@ client.on('ready', () => {
 
 client.on('message', (message) => {
   if (message.content === `${prefix}agree`) {
-    const attachment = new MessageAttachment('./images/kirk_and_mccoy_concur.gif');
+    let attachment = new MessageAttachment(
+      './images/kirk_and_mccoy_concur.gif'
+    );
     message.channel.send(attachment);
+  } else if (message.content === `${prefix}winning`) {
+    giphy
+      .search('gifs', { q: 'winning' })
+      .then((res) => {
+        const resTotal = res.data.length;
+        const resIndex = Math.floor(Math.random() * 10 + 1) % resTotal;
+        const resFinal = res.data[resIndex];
+        message.channel.send({ files: [resFinal.images.fixed_height.url] });
+      })
+      .catch((err) => console.log(err));
+  } else if (message.content === `${prefix}sad`) {
+    giphy
+      .search('gifs', { q: 'fall' })
+      .then((res) => {
+        const resTotal = res.data.length;
+        const resIndex = Math.floor(Math.random() * 10 + 1) % resTotal;
+        const resFinal = res.data[resIndex];
+        message.channel.send({ files: [resFinal.images.fixed_height.url] });
+      })
+      .catch((err) => console.log(err));
+  } else if (message.content === `${prefix}happy`) {
+    giphy
+      .search('gifs', { q: 'jump' })
+      .then((res) => {
+        const resTotal = res.data.length;
+        const resIndex = Math.floor(Math.random() * 10 + 1) % resTotal;
+        const resFinal = res.data[resIndex];
+
+        message.channel.send({ files: [resFinal.images.fixed_height.url] });
+      })
+      .catch((err) => console.log(err));
   }
 });
 
-// client.login(token);
-client.login(process.env.BOT_TOKEN);
+client.login(token);

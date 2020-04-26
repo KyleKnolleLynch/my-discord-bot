@@ -1,3 +1,5 @@
 {
-  "prefix": "!"
+  "prefix": "!",
+  "token": "process.env.BOT_TOKEN",
+  "giphyToken": "process.env.GIPHY_TOKEN"
 }
